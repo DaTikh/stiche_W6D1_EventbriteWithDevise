@@ -1,3 +1,4 @@
+<% if @upcoming.size > 0 %>
 <h4 class="text-center">Events à venir !</h4>
   <div class="container">
      <div class="row justify-content-center">
@@ -18,9 +19,11 @@
       <% end %>
     </div>
   </div>
+<% end %>
 
+<% if @past.size > 0 %>
 <h4 class="text-center">Events passés...</h4>
-  <div class="container">
+  <div class="container text-muted">
      <div class="row justify-content-center">
       <% @past.each_with_index do |event, i| %>
         <div class="col-md-6">
@@ -39,3 +42,4 @@
       <% end %>
     </div>
   </div>
+<% end %>

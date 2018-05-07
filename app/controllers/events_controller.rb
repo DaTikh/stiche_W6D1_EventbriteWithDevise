@@ -59,6 +59,13 @@ class EventsController < ApplicationController
     events_aging(@events)
   end
 
+  def subscribe
+    @event = Event.find(params[:event])
+    @event.attendees << @user
+    flash[:success] = "Tu as bien rejoint l'évènement !!"
+    redirect_to user_path
+  end
+
   private
 
   def params_event

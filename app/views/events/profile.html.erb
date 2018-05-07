@@ -2,6 +2,29 @@
     <h3>Profil de <%= @user.name.capitalize %></h3>
 </div>
 
+<% if !@user.attending_events.nil? %>
+  <h4 class="text-center">Participe à...</h4>
+  <div class="container">
+     <div class="row justify-content-center">
+  <% @user.attending_events.each_with_index do |event, i| %>
+  <div class="col-md-6">
+    <div class="form-group border rounded border-info" style="padding: 10px;">
+      <p><strong>"<%= event.title.capitalize %>"</strong></p>
+      <div class="row align-items-center justify-content-center">
+        <div class="col-6">
+          <%= event.date.strftime('%e %B').downcase %> - <%= event.place.capitalize %>
+        </div>
+        <div class="col-4">
+          <%= link_to "Voir / Editer", event_path(event.id), class: "btn btn-outline-info" %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+  </div>
+</div>
+<% end %>
+
 <% if @upcoming.size > 0 %>
 <h4 class="text-center">Events à venir !</h4>
   <div class="container">
@@ -27,7 +50,7 @@
 
 <% if @past.size > 0 %>
   <h4 class="text-center">Events passés...</h4>
-    <div class="container">
+    <div class="container text-muted">
        <div class="row justify-content-center">
         <% @past.each_with_index do |event, i| %>
           <div class="col-md-6">
