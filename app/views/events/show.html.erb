@@ -1,0 +1,29 @@
+  <% if is_owner?(@event) && @event.date > Time.now %>
+    <h3>Infos de l'évènement <%= link_to 'Modifier', edit_event_path, class: "btn btn-outline-success" %> <%= link_to 'Supprimer', event_path, method: :delete, data: {confirm: "Voulez vous supprimer l'évènement ?"}, class: "btn btn-outline-danger" %></h3>
+  <% else %>
+    <h3>Infos de l'évènement</h3>
+  <% end %>
+
+<div class="container border border-info" style="padding-top: 5px;">
+  <div class="row align-items-center">
+    <div class="col-md-8">
+      <p><strong><%= @event.description %></strong></p>
+      <p><em>Event créé par <%= @event.creator.name %></em></p>
+    </div>
+    <div class="col-md-4 text-center">
+      <h4 class="text-primary"><%= @event.date.strftime('%e %B').downcase %> - <%= @event.date.strftime('%H:%M')%></h4>
+      <h4 class="text-info"><%= @event.place %> </h4>
+    </div>
+  </div>
+</div>
+
+ <% if @event.attendees.nil? %>
+<h3>Liste des participants</h3>
+<div class="form-group">
+  <div class="justify-content-center">
+    <% @event.attendees.each do |att| %>
+      <p><%= att.name %></p>
+    <% end %>
+  </div>
+</div>
+  <% end %>

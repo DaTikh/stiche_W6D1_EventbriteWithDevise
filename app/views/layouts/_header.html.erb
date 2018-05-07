@@ -1,23 +1,25 @@
 <header>
-
-  <ul class="nav navbar justify-content-center bg-dark nav-pills">
+<div id="header">
+  <ul class="nav navbar justify-content-left bg-dark nav-pills">
     <li class="nav-item">
-      <%= link_to "HOME", root_path, class: "nav-link navbar-brand btn btn-danger" %>
+      <%= link_to "Home", root_path, class: "nav-link navbar-brand btn btn-danger" %>
     </li>
+
+    <ul class="nav navbar justify-content-center bg-dark nav-pills">
 
     <% if user_signed_in? %>
 
     <li class="nav-item">
-      <%= link_to "Mes events", user_path, class: "navlink navbar-brand btn btn-primary" %>
+      <%= link_to "Mon profil", user_path, class: "navlink navbar-brand btn-sm btn-primary" %>
     </li>
     <li class="nav-item">
-      <%= link_to "Liste des events", events_path, class: "nav-link navbar-brand btn btn-info" %>
+      <%= link_to "Liste des events", events_path, class: "nav-link navbar-brand btn-sm btn-info" %>
     </li>
     <li class="nav-item">
-      <%= link_to "Créer un event", new_event_path, class: "nav-link navbar-brand btn btn-success" %>
+      <%= link_to "Créer un event", new_event_path, class: "nav-link navbar-brand btn-sm btn-success" %>
     </li>
     <div class="btn-group">
-      <li type="button" class="navbar-brand btn btn-warning text-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <li type="button" class="navbar-brand btn-sm btn-warning text-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Mon compte
       </li>
         <div class="dropdown-menu">
@@ -29,15 +31,15 @@
 
     <% else %>
 
-    <li>
+    <li class="nav-item">
       <%= link_to "S'inscrire", new_user_registration_path, class: "nav-link navbar-brand btn btn-primary" %>
     </li>
-    <li>
+    <li class="nav-item">
       <%= link_to "Se connecter", new_user_session_path, class: "nav-link navbar-brand btn btn-success" %>
     </li>
 
     <% end %>
-
+    </ul>
   </ul>
-
+</div>
 </header>

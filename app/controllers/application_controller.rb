@@ -14,7 +14,21 @@ class ApplicationController < ActionController::Base
    if !user_signed_in?
      flash[:notice] = "Merci de vous connecter pour accéder à cette page."
      redirect_to new_user_session_path
+   else
+     @user = current_user
    end
  end
 
-end
+ def events_aging(events)
+   @upcoming = []
+   @past = []
+   events.each do |event|
+     if event.date > Time.now
+       @upcoming << event
+     else
+       @past << event
+     end
+   end
+ end
+
+ end
