@@ -1,0 +1,8 @@
+<h2>Bienvenue <%= @user.name.capitalize %></h2>
+
+<h2>Mes events</h2>
+<div class="container">
+  <% @user.created_events.each do |event| %>
+  <p><%= event.title %></p>
+  <% end %>
+</div>

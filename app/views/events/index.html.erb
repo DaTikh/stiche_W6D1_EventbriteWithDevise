@@ -1,0 +1,10 @@
+<h4 class="text-center">Liste</h4>
+<div class="container">
+    <% @events.each_with_index do |event, i| %>
+      <div class="form-group border border-muted">
+        <p><strong>"<%= event.title.capitalize %>"</strong></p>
+        <p><%= event.date.strftime('le ' + '%e %B' + ' à ' + '%H' + 'h''%M') %> - <%= event.place %></p>
+        <%= link_to "Plus d'infos", event_path(event.id), class: "btn btn-outline-secondary" %>
+      </div>
+  <% end %>
+</div>
