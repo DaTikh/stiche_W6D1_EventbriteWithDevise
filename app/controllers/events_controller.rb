@@ -21,6 +21,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find_by_id(params[:id])
+    @price = (@event.price.to_f * 100).to_i
   end
 
   def edit
@@ -61,13 +62,13 @@ class EventsController < ApplicationController
 
   def payment
     @event = Event.find(params[:event])
-
+    @price = (@event.price.to_f * 100).to_i
     Stripe.api_key = "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
 
     token = params.require(:stripeToken)
 
     charge = Stripe::Charge.create({
-        amount: (@event.price.to_f * 100),
+        amount: @price,
         currency: 'eur',
         description: "Paiement #{@user.name} pour event n°#{@event.id}",
         source: token,
