@@ -11,12 +11,8 @@
       <%= u.text_area :description %><br>
   </div>
   <div class="form-group">
-      <%= u.label "Date" %><br>
-      <%= u.date_select :date, order: [:day, :month, :year], class: "form-control" %><br>
-  </div>
-  <div class="form-group">
-      <%= u.label "Heure" %><br>
-      <%= u.time_select :date, minute_step: 15, class: "form-control" %><br>
+      <%= u.label "Date et heure" %><br>
+      <%= u.datetime_select :date, order: [:day, :month, :year], minute_step: 15 %><br>
   </div>
   <div class="form-group">
       <%= u.label "Lieu" %><br>

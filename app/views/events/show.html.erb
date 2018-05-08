@@ -11,7 +11,12 @@
       <p><em>Event créé par <%= @event.creator.name %></em></p>
     </div>
     <div class="col-md-2 text-center">
-      <%= link_to "Subscribe", {:action => :subscribe, :event => @event}, :method => :put, class: "btn btn-outline-success" %>
+      <% if is_owner?(@event) %>
+      <% elsif !@event.attendees.include?(@user) && @event.date > Time.now %>
+      <%= link_to "Subscribe", {:action => :subscribe, :event => @event}, :method => :put, class: "btn btn-outline-primary" %>
+      <% elsif @event.date > Time.now %>
+      <%= link_to "Unsubscribe", {:action => :unsubscribe, :event => @event}, :method => :delete, class: "btn btn-outline-secondary" %>
+      <% end %>
     </div>
     <div class="col-md-4 text-center">
       <h4 class="text-primary"><%= @event.date.strftime('%e %B').downcase %> - <%= @event.date.strftime('%H:%M')%></h4>
@@ -20,8 +25,9 @@
   </div>
 </div>
 
- <% if @event.attendees.nil? %>
-<h3>Liste des participants</h3>
+ <% if @event.attendees.size > 0 %>
+<h3 style="padding-top: 20px">Liste des participants</h3>
+ <div class="container">
 <div class="form-group">
   <div class="justify-content-center">
     <% @event.attendees.each do |att| %>
@@ -30,3 +36,4 @@
   </div>
 </div>
   <% end %>
+</div>

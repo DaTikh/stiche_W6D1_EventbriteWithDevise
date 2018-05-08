@@ -2,43 +2,20 @@
     <h3>Profil de <%= @user.name.capitalize %></h3>
 </div>
 
-<% if !@user.attending_events.nil? %>
-  <h4 class="text-center">Participe à...</h4>
-  <div class="container">
-     <div class="row justify-content-center">
-  <% @user.attending_events.each_with_index do |event, i| %>
-  <div class="col-md-6">
-    <div class="form-group border rounded border-info" style="padding: 10px;">
-      <p><strong>"<%= event.title.capitalize %>"</strong></p>
-      <div class="row align-items-center justify-content-center">
-        <div class="col-6">
-          <%= event.date.strftime('%e %B').downcase %> - <%= event.place.capitalize %>
-        </div>
-        <div class="col-4">
-          <%= link_to "Voir / Editer", event_path(event.id), class: "btn btn-outline-info" %>
-        </div>
-      </div>
-    </div>
-  </div>
-  <% end %>
-  </div>
-</div>
-<% end %>
-
 <% if @upcoming.size > 0 %>
-<h4 class="text-center">Events à venir !</h4>
+<h4 class="text-center">Events organisés par <%= @user.name.capitalize %> :</h4>
   <div class="container">
      <div class="row justify-content-center">
       <% @upcoming.each_with_index do |event, i| %>
         <div class="col-md-6">
-          <div class="form-group border rounded border-info" style="padding: 10px;">
-            <p><strong>"<%= event.title.capitalize %>"</strong></p>
+          <div class="form-group border rounded border-success" style="padding: 10px;">
+            <p><strong><%= event.title.capitalize %></strong></p>
             <div class="row align-items-center justify-content-center">
               <div class="col-6">
                 <%= event.date.strftime('%e %B').downcase %> - <%= event.place.capitalize %>
               </div>
               <div class="col-4">
-                <%= link_to "Voir / Editer", event_path(event.id), class: "btn btn-outline-info" %>
+                <%= link_to "Voir / Editer", event_path(event.id), class: "btn btn-outline-primary" %>
               </div>
             </div>
           </div>
@@ -48,20 +25,43 @@
   </div>
 <% end %>
 
+<% if @user.attending_events.size != 0 %>
+  <h4 class="text-center"><%= @user.name.capitalize %> participe à...</h4>
+  <div class="container">
+     <div class="row justify-content-center">
+  <% @user.attending_events.each_with_index do |event, i| %>
+  <div class="col-md-6">
+    <div class="form-group border rounded border-info" style="padding: 10px;">
+      <p><strong><%= event.title.capitalize %></strong></p>
+      <div class="row align-items-center justify-content-center">
+        <div class="col-6">
+          <%= event.date.strftime('%e %B').downcase %> - <%= event.place.capitalize %>
+        </div>
+        <div class="col-4">
+          <%= link_to "Plus d'infos", event_path(event.id), class: "btn btn-outline-info" %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+  </div>
+</div>
+<% end %>
+
 <% if @past.size > 0 %>
-  <h4 class="text-center">Events passés...</h4>
+  <h4 class="text-center"><%= @user.name.capitalize %> a déjà organisé</h4>
     <div class="container text-muted">
        <div class="row justify-content-center">
         <% @past.each_with_index do |event, i| %>
           <div class="col-md-6">
             <div class="form-group border rounded border-muted" style="padding: 10px;">
-              <p><strong>"<%= event.title.capitalize %>"</strong></p>
+              <p><strong><%= event.title.capitalize %></strong></p>
               <div class="row align-items-center justify-content-center">
                 <div class="col-6">
                   <%= event.date.strftime('%e %B').downcase %> - <%= event.place.capitalize %>
                 </div>
                 <div class="col-4">
-                  <%= link_to "Plus d'infos", event_path(event.id), class: "btn btn-outline-secondary" %>
+                  <%= link_to "Revoir", event_path(event.id), class: "btn btn-outline-secondary" %>
                 </div>
               </div>
             </div>

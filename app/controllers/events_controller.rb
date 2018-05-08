@@ -62,8 +62,15 @@ class EventsController < ApplicationController
   def subscribe
     @event = Event.find(params[:event])
     @event.attendees << @user
-    flash[:success] = "Tu as bien rejoint l'évènement !!"
-    redirect_to user_path
+    flash[:notice] = "Tu as bien rejoint l'évènement !!"
+    redirect_to event_path(@event)
+  end
+
+  def unsubscribe
+    @event = Event.find(params[:event])
+    @event.attendees.delete(@user)
+    flash[:notice] = "Tu as bien quitté l'évènement !!"
+    redirect_to event_path(@event)
   end
 
   private
