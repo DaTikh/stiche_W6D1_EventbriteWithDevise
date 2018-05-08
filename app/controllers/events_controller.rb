@@ -67,7 +67,7 @@ class EventsController < ApplicationController
     token = params.require(:stripeToken)
 
     charge = Stripe::Charge.create({
-        amount: @event.price.to_i * 100,
+        amount: (@event.price.to_f * 100),
         currency: 'eur',
         description: "Paiement #{@user.name} pour event n°#{@event.id}",
         source: token,
