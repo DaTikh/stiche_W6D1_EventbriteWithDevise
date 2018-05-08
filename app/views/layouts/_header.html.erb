@@ -1,6 +1,5 @@
 <header>
 <div id="header">
-  <!-- <ul class="nav navbar justify-content-left bg-dark nav-pills"> -->
   <ul class="navbar nav justify-content-left bg-dark">
     <li class="nav-item">
       <%= link_to "Home", root_path, class: "nav-link navbar-brand btn btn-danger" %>
@@ -33,10 +32,10 @@
     <% else %>
 
     <li class="nav-item">
-      <%= link_to "S'inscrire", new_user_registration_path, class: "nav-link navbar-brand btn btn-primary" %>
+      <%= link_to "S'inscrire", new_user_registration_path, class: "nav-link navbar-brand btn-sm btn-primary" %>
     </li>
     <li class="nav-item">
-      <%= link_to "Se connecter", new_user_session_path, class: "nav-link navbar-brand btn btn-success" %>
+      <%= link_to "Se connecter", new_user_session_path, class: "nav-link navbar-brand btn-sm btn-success" %>
     </li>
 
     <% end %>
