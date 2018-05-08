@@ -3,70 +3,28 @@
 </div>
 
 <% if @upcoming.size > 0 %>
-<h4 class="text-center">Events organisés par <%= @user.name.capitalize %> :</h4>
-  <div class="container">
-     <div class="row justify-content-center">
-      <% @upcoming.each_with_index do |event, i| %>
-        <div class="col-md-6">
-          <div class="form-group border rounded border-success" style="padding: 10px;">
-            <p><strong><%= event.title.capitalize %></strong></p>
-            <div class="row align-items-center justify-content-center">
-              <div class="col-6">
-                <%= event.date.strftime('%e %B').downcase %> - <%= event.place.capitalize %>
-              </div>
-              <div class="col-4">
-                <%= link_to "Voir / Editer", event_path(event.id), class: "btn btn-outline-primary" %>
-              </div>
-            </div>
-          </div>
-        </div>
-      <% end %>
-    </div>
-  </div>
+  <% @form_resource = @upcoming %>
+  <% @form_title = "Events organisés par #{@user.name.capitalize} :" %>
+  <% @form_button = "Voir / Editer" %>
+  <% @button_class = "btn-outline-primary" %>
+  <% @border_class = "border-success" %>
+  <%= render "form" %>
 <% end %>
 
 <% if @user.attending_events.size != 0 %>
-  <h4 class="text-center"><%= @user.name.capitalize %> participe à...</h4>
-  <div class="container">
-     <div class="row justify-content-center">
-  <% @user.attending_events.each_with_index do |event, i| %>
-  <div class="col-md-6">
-    <div class="form-group border rounded border-info" style="padding: 10px;">
-      <p><strong><%= event.title.capitalize %></strong></p>
-      <div class="row align-items-center justify-content-center">
-        <div class="col-6">
-          <%= event.date.strftime('%e %B').downcase %> - <%= event.place.capitalize %>
-        </div>
-        <div class="col-4">
-          <%= link_to "Plus d'infos", event_path(event.id), class: "btn btn-outline-info" %>
-        </div>
-      </div>
-    </div>
-  </div>
-  <% end %>
-  </div>
-</div>
+  <% @form_resource = @user.attending_events %>
+  <% @form_title = "#{@user.name.capitalize} participe à..." %>
+  <% @form_button = "Plus d'infos" %>
+  <% @button_class = "btn-outline-info" %>
+  <% @border_class = "border-info" %>
+  <%= render "form" %>
 <% end %>
 
 <% if @past.size > 0 %>
-  <h4 class="text-center"><%= @user.name.capitalize %> a déjà organisé</h4>
-    <div class="container text-muted">
-       <div class="row justify-content-center">
-        <% @past.each_with_index do |event, i| %>
-          <div class="col-md-6">
-            <div class="form-group border rounded border-muted" style="padding: 10px;">
-              <p><strong><%= event.title.capitalize %></strong></p>
-              <div class="row align-items-center justify-content-center">
-                <div class="col-6">
-                  <%= event.date.strftime('%e %B').downcase %> - <%= event.place.capitalize %>
-                </div>
-                <div class="col-4">
-                  <%= link_to "Revoir", event_path(event.id), class: "btn btn-outline-secondary" %>
-                </div>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
+  <% @form_resource = @past %>
+  <% @form_title = "#{@user.name.capitalize} a déjà organisé" %>
+  <% @form_button = "Revoir" %>
+  <% @button_class = "btn-outline-secondary" %>
+  <% @border_class = "border-muted" %>
+  <%= render "form" %>
+<% end %>

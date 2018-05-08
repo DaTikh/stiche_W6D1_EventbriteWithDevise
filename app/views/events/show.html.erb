@@ -1,8 +1,10 @@
-  <% if is_owner?(@event) && @event.date > Time.now %>
-    <h3>Infos de l'évènement <%= link_to 'Modifier', edit_event_path, class: "btn btn-outline-success" %> <%= link_to 'Supprimer', event_path, method: :delete, data: {confirm: "Voulez vous supprimer l'évènement ?"}, class: "btn btn-outline-danger" %></h3>
-  <% else %>
-    <h3>Infos de l'évènement</h3>
-  <% end %>
+<div class="container">
+
+<% if is_owner?(@event) && @event.date > Time.now %>
+  <h3>Infos de l'évènement <%= link_to 'Modifier', edit_event_path, class: "btn btn-outline-success" %> <%= link_to 'Supprimer', event_path, method: :delete, data: {confirm: "Voulez vous supprimer l'évènement ?"}, class: "btn btn-outline-danger" %></h3>
+<% else %>
+  <h3>Infos de l'évènement</h3>
+<% end %>
 
 <div class="container border border-info" style="padding-top: 5px;">
   <div class="row align-items-center">
@@ -11,12 +13,12 @@
       <p><em>Event créé par <%= @event.creator.name %></em></p>
     </div>
     <div class="col-md-2 text-center">
-      <% if is_owner?(@event) %>
+      <!-- <% if is_owner?(@event) %>
       <% elsif !@event.attendees.include?(@user) && @event.date > Time.now %>
       <%= link_to "Subscribe", {:action => :subscribe, :event => @event}, :method => :put, class: "btn btn-outline-primary" %>
       <% elsif @event.date > Time.now %>
       <%= link_to "Unsubscribe", {:action => :unsubscribe, :event => @event}, :method => :delete, class: "btn btn-outline-secondary" %>
-      <% end %>
+      <% end %> -->
     </div>
     <div class="col-md-4 text-center">
       <h4 class="text-primary"><%= @event.date.strftime('%e %B').downcase %> - <%= @event.date.strftime('%H:%M')%></h4>
@@ -25,15 +27,33 @@
   </div>
 </div>
 
+<div class="container text-center" style="margin: 50px auto; width: 18rem;">
+  <% if is_owner?(@event) %>
+  <% elsif !@event.attendees.include?(@user) && @event.date > Time.now %>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Subscribe</h5>
+        <h6 class="card-subtitle mb-2 text-muted"><%= @event.title %></h6>
+        <p class="card-text">Pour vous inscrire merci de régler la somme de 5 €.</p>
+        <%= link_to "Subscribe", {:action => :subscribe, :event => @event}, :method => :put, class: "btn btn-outline-primary" %>
+      </div>
+    </div>
+  <% elsif @event.date > Time.now %>
+  <%= link_to "Unsubscribe", {:action => :unsubscribe, :event => @event}, :method => :delete, class: "btn btn-outline-secondary" %>
+  <% end %>
+</div>
+
  <% if @event.attendees.size > 0 %>
 <h3 style="padding-top: 20px">Liste des participants</h3>
  <div class="container">
-<div class="form-group">
-  <div class="justify-content-center">
-    <% @event.attendees.each do |att| %>
-      <p><%= att.name %></p>
-    <% end %>
-  </div>
-</div>
+   <div class="form-group">
+     <div class="justify-content-center">
+       <% @event.attendees.each do |att| %>
+        <p><%= att.name %></p>
+       <% end %>
+     </div>
+   </div>
   <% end %>
+  </div>
+
 </div>
