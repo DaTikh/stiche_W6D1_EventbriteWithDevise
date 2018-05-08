@@ -1,0 +1,32 @@
+<div class="container text-center">
+    <h3>Profil de <%= @user.name.capitalize %></h3>
+    <p><em><%= @user.created_events.size %> évènement(s) organisé(s)</em></p>
+    <br />
+</div>
+
+<% if @upcoming.size > 0 %>
+  <% @form_resource = @upcoming %>
+  <% @form_title = "Events organisés par #{@user.name.capitalize} :" %>
+  <% @form_button = "Voir / Editer" %>
+  <% @button_class = "btn-outline-primary" %>
+  <% @border_class = "border-success" %>
+  <%= render "form" %>
+<% end %>
+
+<% if @user.attending_events.size != 0 %>
+  <% @form_resource = @user.attending_events %>
+  <% @form_title = "#{@user.name.capitalize} participe à..." %>
+  <% @form_button = "Plus d'infos" %>
+  <% @button_class = "btn-outline-info" %>
+  <% @border_class = "border-info" %>
+  <%= render "form" %>
+<% end %>
+
+<% if @past.size > 0 %>
+  <% @form_resource = @past %>
+  <% @form_title = "#{@user.name.capitalize} a déjà organisé" %>
+  <% @form_button = "Revoir" %>
+  <% @button_class = "btn-outline-secondary" %>
+  <% @border_class = "border-muted" %>
+  <%= render "form" %>
+<% end %>

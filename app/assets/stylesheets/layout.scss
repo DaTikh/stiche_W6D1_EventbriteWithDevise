@@ -1,0 +1,21 @@
+body {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  }
+
+#header {
+  top: 0;
+  width: 100%;
+  position: fixed;
+}
+
+#footer {
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  height: 80px;
+  color: white;
+  .footer-block {
+    margin: 20px 0;
+  }
+}

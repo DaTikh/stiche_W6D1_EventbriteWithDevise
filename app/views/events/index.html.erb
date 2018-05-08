@@ -1,0 +1,17 @@
+<% if @upcoming.size > 0 %>
+  <% @form_resource = @upcoming %>
+  <% @form_title = "Events à venir !" %>
+  <% @form_button = "Plus d'infos" %>
+  <% @button_class = "btn-outline-info" %>
+  <% @border_class = "border-success" %>
+  <%= render "form" %>
+<% end %>
+
+<% if @past.size > 0 %>
+  <% @form_resource = @past %>
+  <% @form_title = "Events passés..." %>
+  <% @form_button = "Revoir" %>
+  <% @button_class = "btn-outline-secondary" %>
+  <% @border_class = "border-muted" %>
+  <%= render "form" %>
+<% end %>
