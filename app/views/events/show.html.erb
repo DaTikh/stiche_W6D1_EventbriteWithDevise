@@ -9,16 +9,16 @@
 <div class="container border border-info" style="padding-top: 5px;">
   <div class="row align-items-center">
     <div class="col-md-6">
+      <p><strong><%= @event.title %></strong></p>
       <p><strong><%= @event.description %></strong></p>
       <p><em>Event créé par <%= @event.creator.name %></em></p>
     </div>
     <div class="col-md-2 text-center">
-      <!-- <% if is_owner?(@event) %>
-      <% elsif !@event.attendees.include?(@user) && @event.date > Time.now %>
-      <%= link_to "Subscribe", {:action => :subscribe, :event => @event}, :method => :put, class: "btn btn-outline-primary" %>
-      <% elsif @event.date > Time.now %>
-      <%= link_to "Unsubscribe", {:action => :unsubscribe, :event => @event}, :method => :delete, class: "btn btn-outline-secondary" %>
-      <% end %> -->
+      <% if @event.price.to_i != 0 %>
+        <h4><strong><%= @event.price %> €</strong></h4>
+      <% else %>
+        <h4><strong>Gratuit</strong></h4>
+      <% end %>
     </div>
     <div class="col-md-4 text-center">
       <h4 class="text-primary"><%= @event.date.strftime('%e %B').downcase %> - <%= @event.date.strftime('%H:%M')%></h4>
@@ -29,13 +29,32 @@
 
 <div class="container text-center" style="margin: 50px auto; width: 18rem;">
   <% if is_owner?(@event) %>
+  <% elsif @event.price.to_i == 0 && !@event.attendees.include?(@user) && @event.date > Time.now %>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">S'inscrire</h5>
+      <h6 class="card-subtitle mb-2 text-muted"><%= @event.title %></h6>
+      <%= link_to "S'inscrire gratuitement", {:action => :subscribe, :event => @event}, :method => :post, class: "btn btn-primary" %>
+    </div>
+  </div>
   <% elsif !@event.attendees.include?(@user) && @event.date > Time.now %>
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Subscribe</h5>
+        <h5 class="card-title">S'inscrire</h5>
         <h6 class="card-subtitle mb-2 text-muted"><%= @event.title %></h6>
-        <p class="card-text">Pour vous inscrire merci de régler la somme de 5 €.</p>
-        <%= link_to "Subscribe", {:action => :subscribe, :event => @event}, :method => :put, class: "btn btn-outline-primary" %>
+        <p class="card-text">Pour vous inscrire merci de régler la somme de <%= @event.price %> €</p>
+        <%= form_for @event, url: {:action => :payment, :event => @event}, :method => :post do |f| %>
+            <script
+              src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
+              data-amount="<%= @event.price %>"
+              data-name="Paiement de <%= @user.name %>"
+              data-description="Pour l'event n°<%= @event.id %>"
+              data-image="https://www.thehackingproject.org/assets/thp-logo-5f2f06c9444205a88123ca1de74646970e5a1dfb03698d02db33e5e62a60d6cd.png"
+              data-locale="auto"
+              data-zip-code="false">
+            </script>
+        <% end %>
       </div>
     </div>
   <% elsif @event.date > Time.now %>

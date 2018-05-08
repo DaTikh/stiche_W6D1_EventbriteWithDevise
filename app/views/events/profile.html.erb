@@ -1,5 +1,7 @@
 <div class="container text-center">
     <h3>Profil de <%= @user.name.capitalize %></h3>
+    <p><em><%= @user.created_events.size %> évènement(s) organisé(s)</em></p>
+    <br />
 </div>
 
 <% if @upcoming.size > 0 %>

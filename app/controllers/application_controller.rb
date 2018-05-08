@@ -1,6 +1,12 @@
 class ApplicationController < ActionController::Base
 
   before_action :configure_devise_params, if: :devise_controller?
+  before_action :set_timezone
+
+ def set_timezone
+    Time.zone = "CET"
+ end
+
 
  def configure_devise_params
    devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:name, :email, :password, :password_confirmation) }

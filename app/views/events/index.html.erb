@@ -1,45 +1,17 @@
 <% if @upcoming.size > 0 %>
-<h4 class="text-center">Events à venir !</h4>
-  <div class="container">
-     <div class="row justify-content-center">
-      <% @upcoming.each_with_index do |event, i| %>
-        <div class="col-md-6">
-          <div class="form-group border rounded border-info" style="padding: 10px;">
-            <p><strong><%= event.title.capitalize %></strong></p>
-            <div class="row align-items-center justify-content-center">
-              <div class="col-6">
-                <%= event.date.strftime('%e %B').downcase %> - <%= event.place.capitalize %>
-              </div>
-              <div class="col-4">
-                <%= link_to "Plus d'infos", event_path(event.id), class: "btn btn-outline-info" %>
-              </div>
-            </div>
-          </div>
-        </div>
-      <% end %>
-    </div>
-  </div>
+  <% @form_resource = @upcoming %>
+  <% @form_title = "Events à venir !" %>
+  <% @form_button = "Plus d'infos" %>
+  <% @button_class = "btn-outline-info" %>
+  <% @border_class = "border-success" %>
+  <%= render "form" %>
 <% end %>
 
 <% if @past.size > 0 %>
-<h4 class="text-center">Events passés...</h4>
-  <div class="container text-muted">
-     <div class="row justify-content-center">
-      <% @past.each_with_index do |event, i| %>
-        <div class="col-md-6">
-          <div class="form-group border rounded border-muted" style="padding: 10px;">
-            <p><strong><%= event.title.capitalize %></strong></p>
-            <div class="row align-items-center justify-content-center">
-              <div class="col-6">
-                <%= event.date.strftime('%e %B').downcase %> - <%= event.place.capitalize %>
-              </div>
-              <div class="col-4">
-                <%= link_to "Revoir", event_path(event.id), class: "btn btn-outline-secondary" %>
-              </div>
-            </div>
-          </div>
-        </div>
-      <% end %>
-    </div>
-  </div>
+  <% @form_resource = @past %>
+  <% @form_title = "Events passés..." %>
+  <% @form_button = "Revoir" %>
+  <% @button_class = "btn-outline-secondary" %>
+  <% @border_class = "border-muted" %>
+  <%= render "form" %>
 <% end %>

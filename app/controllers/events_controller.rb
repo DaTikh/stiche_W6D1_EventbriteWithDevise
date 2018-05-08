@@ -15,7 +15,7 @@ class EventsController < ApplicationController
         redirect_to user_path
       else
         flash[:alert] = "Merci de renseigner tous les champs correctement."
-        render new
+        render "new"
       end
   end
 
@@ -38,7 +38,7 @@ class EventsController < ApplicationController
         redirect_to event_path
       else
         flash[:alert] = "Merci de renseigner tous les champs correctement."
-        render edit
+        render "edit"
       end
   end
 
@@ -59,6 +59,30 @@ class EventsController < ApplicationController
     events_aging(@events)
   end
 
+  def payment
+    @event = Event.find(params[:event])
+
+    Stripe.api_key = "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
+
+    token = params.require(:stripeToken)
+
+    charge = Stripe::Charge.create({
+        amount: @event.price.to_i * 100,
+        currency: 'eur',
+        description: "Paiement #{@user.name} pour event n°#{@event.id}",
+        source: token,
+    })
+
+    if charge.save
+      @event.attendees << @user
+      flash[:notice] = "Tu as bien rejoint l'évènement !!"
+      redirect_to event_path(@event)
+    else
+      flash[:notice] = "Problème de paiement"
+      redirect_to event_path(@event)
+    end
+  end
+
   def subscribe
     @event = Event.find(params[:event])
     @event.attendees << @user
@@ -76,7 +100,7 @@ class EventsController < ApplicationController
   private
 
   def params_event
-    params.require(:event).permit(:title, :description, :date, :place)
+    params.require(:event).permit(:title, :description, :date, :place, :price)
   end
 
   def is_owner?(event)

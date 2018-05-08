@@ -12,11 +12,15 @@
   </div>
   <div class="form-group">
       <%= u.label "Date et heure" %><br>
-      <%= u.datetime_select :date, order: [:day, :month, :year], minute_step: 15 %><br>
+      <%= u.datetime_select :date, order: [:day, :month, :year], start_year: Time.now.year, minute_step: 15 %><br>
   </div>
   <div class="form-group">
       <%= u.label "Lieu" %><br>
       <%= u.text_field :place %><br>
+  </div>
+  <div class="form-group">
+      <%= u.label "Prix d'inscription" %><br>
+      <%= u.number_field :price, {value: 0, within: 0..1000, step: 1} %><br>
   </div>
   <div class="submit">
       <%= u.submit "Créer l'event !", class: "btn btn-primary" %>
