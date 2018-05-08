@@ -3,7 +3,7 @@
 <div class="text-center border" style="padding-top: 20px">
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+
   <div class="form-group">
     <%= f.label "Nom d'utilisateur / email"%><br />
     <%= f.text_field :login, autofocus: true %>
@@ -21,9 +21,9 @@
       <%= f.label :remember_me %>
     </div>
   <% end -%>
-</div>
-<br />
+
   <div class="actions text-center">
     <%= f.submit "Se connecter" %>
   </div>
 <% end %>
+</div>
